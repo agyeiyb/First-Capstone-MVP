@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Find new things based on your taste!">
+    <title>Book Recommender</title>
+    <!--styles-->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Paytone+One" rel="stylesheet">
+    <link href="https://cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+    <link href="https://cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.gallery.min.css" type="text/css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <header role="banner">
+        <h1 id="heading">Book Recommendations</h1>
+        <p id="blurb">Find new books based on your taste!</p>
+    </header>
+    <main role="main" id="bg">
+        <section role="region">
+            <div class="modal">
+                <div class="js-warn"></div>
+                <div class="container">
+                    <form id="js-start" title="sumbit">
+                        <fieldset name="query-term">
+                            <div>
+                                <label><input placeholder="Search for book suggestions. . ." type="text" name="search" class="js-search-term" /></label>
+                                <button aria-label="submit" type="submit" class="js-search" value="book">Search
+                                 </button>
+                            </div>
+                           
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div class="js-results" aria-live="assertive"></div>
+        </section>
+    </main>
+    <!--scripts-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="script.js"></script>
+    
+
+</body>
+
+</html>
