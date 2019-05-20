@@ -25,7 +25,8 @@ function watchSubmit(){
         const queryVal = queryTarget.val();
 
         const typeTarget = $('button[type="submit"]');
-        const typeVal = "book:";
+        const typeVal = "books";
+       
        if (queryVal.trim() == "") {
             $('.js-warn').html(`Please enter a valid query`);
         } else {
