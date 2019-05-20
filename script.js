@@ -53,6 +53,7 @@ function getResultMarkup(data) {
         <p class="js-name clearfix">${data.Name}</p>
         <div class="js-info">
             <span class="readmore-contain">${data.wTeaser}</span>
+            <a href=${data.wUrl}>Learn More</a>
         </div>
     </div>
     `;
