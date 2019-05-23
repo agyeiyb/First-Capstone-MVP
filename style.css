@@ -1,0 +1,13 @@
+.contain {
+  border-style: double;
+  border-width: 5px;
+  border-radius:4px;
+}
+
+.js-results{
+ display: flex;
+ flex-direction: row;
+ flex-wrap: wrap;
+ justify-content: space-around;
+ margin-left: 0px;
+}
