@@ -28,7 +28,7 @@ function displayResults(responseJson) {
     <div class="js-info">
     <img src='${responseJson.results[i].thumbnail}'>
         <span class="readmore-contain">${responseJson.results[i].description_original}</span>
-        <a href='${responseJson.results[i].listennotes_url}'>Learn More</a>
+        <a class = "learn-more-button" href='${responseJson.results[i].listennotes_url}'>Learn More</a>
     </div>
 </div>
 `
