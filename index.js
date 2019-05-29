@@ -109,10 +109,10 @@ function displayPodcastRecommendations(id) {
       $('.contain').append(
         `
 <div class="similar">
-    <h2 class="js-name clearfix">${id.recommendations[i].title_original}</h2>
+    <h2 class="js-name clearfix">${id.recommendations[i].title}</h2>
     <div class="js-info">
     <img class ="thumbnail" src='${id.recommendations[i].thumbnail}'>
-        <p class="readmore-contain">${id.recommendations[i].description_original}</p>
+        <p class="readmore-contain">${id.recommendations[i].description}</p>
         <a class = "learn-more-button" href='${id.recommendations[i].listennotes_url}'>Learn More</a>
     </div>
 </div>
