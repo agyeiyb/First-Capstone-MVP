@@ -106,7 +106,7 @@ function displayPodcastRecommendations(id) {
   $( ".find-similar" ).click(function() {
     for (let i = 0; i < id.recommendations.length; i++){
 
-      $(this).closest('.contain').append.append(
+      $(this).closest('.contain').append(
         `
 <div class="similar">
     <h2 class="js-name clearfix">${id.recommendations[i].title}</h2>
