@@ -14,7 +14,7 @@ function formatQueryParams(params) {
 
 
 function displayResults(responseJson) {
- 
+  let findsimilar;
   // if there are previous results, remove them
   $('.js-results').empty();
   // iterate through the articles array, stopping at the max number of results
@@ -23,10 +23,11 @@ function displayResults(responseJson) {
     //array, add a list item to the results 
     //list with the article title, source, author,
     //description, and image
-    
+    findsimilar = responseJson.results[i].id;
+    let x = JSON.stringify(responseJson.results[i].id);
     $('.js-results').append(
         `
-<div class="contain">
+<div class ="contain"> 
     <h2 class="js-name clearfix">${responseJson.results[i].title_original}</h2>
     <div class="js-info">
     <img class ="thumbnail" src='${responseJson.results[i].thumbnail}'>
@@ -34,18 +35,27 @@ function displayResults(responseJson) {
         <a class = "learn-more-button" href='${responseJson.results[i].listennotes_url}'>Learn More</a>
         <button class = "find-similar learn-more-button" value = ${responseJson.results[i].id}>Find Similar Podcasts</button>
     </div>
+    <div id = ${responseJson.results[i].id}> </div>
 </div>
 
 `
-    )};
+
+    );
+    $( "button" ).click(function() {
+        getRecommendations(responseJson.results[i].id);
+    })
+    
+    }
+
+   
+    
     
    
   //display the results section  
   $('.js-results').removeClass('hidden');
   
-  const findsimilar = $(".find-similar").val();
-  getRecommendations(findsimilar);
-};
+  
+}
 
 function getPodcasts(query) {
   const params = {
@@ -76,55 +86,57 @@ function getPodcasts(query) {
 }
 
 function getRecommendations(id){
-  const parameters = {
-    id: id
-  };
-
-  const url = recommendationURL + id + '/recommendations?safe_mode=1';
-
-  console.log(url);
-
-  const options = {
-    headers: new Headers({
-      "X-ListenAPI-Key": apiKey})
-  };
-
-  fetch(url, options)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.statusText);
-    })
-    .then(responseJson => displayPodcastRecommendations(responseJson))
-    .catch(err => {
-      $('#js-warn').text(`Something went wrong`);
-    });
-
+    const parameters = {
+        id: id
+      };
+    
+      const url = recommendationURL + id + '/recommendations?safe_mode=1';
+    
+      console.log(url);
+    
+      const options = {
+        headers: new Headers({
+          "X-ListenAPI-Key": apiKey})
+      };
+    
+      fetch(url, options)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(response.statusText);
+        })
+        .then(responseJson => displayPodcastRecommendations(responseJson))
+        .catch(err => {
+          $('#js-warn').text(`Something went wrong`);
+        });
 }
 
 function displayPodcastRecommendations(id) {
-  $( ".find-similar" ).click(function() {
-    for (let i = 0; i < id.recommendations.length; i++){
+    $( "button" ).click(function() {
 
-      $('.contain').append(
-        `
-<div class="similar">
-    <h2 class="js-name clearfix">${id.recommendations[i].title_original}</h2>
-    <div class="js-info">
-    <img class ="thumbnail" src='${id.recommendations[i].thumbnail}'>
-        <p class="readmore-contain">${id.recommendations[i].description_original}</p>
-        <a class = "learn-more-button" href='${id.recommendations[i].listennotes_url}'>Learn More</a>
-    </div>
-</div>
+        $('.recommendation-results').empty();
 
-`
-    )
+        for (let i = 0; i < id.recommendations.length; i++){
+            $('.recommendation-results').append(`
 
-    }
-  });
+            <div class ="contain"> 
+          <h2 class="js-name clearfix">${id.recommendations[i].title_original}</h2>
+          <div class="js-info">
+          <img class ="thumbnail" src='${id.recommendations[i].thumbnail}'>
+              <p class="readmore-contain">${id.recommendations[i].description_original}</p>
+              <a class = "learn-more-button" href='${id.recommendations[i].listennotes_url}'>Learn More</a>
+          </div>
+          
+      </div>
+            `);
+        }
+
+         
+        $('.recommendation-results').removeClass('hidden');
+    
+});
 }
-
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
