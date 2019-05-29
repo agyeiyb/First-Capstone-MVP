@@ -42,7 +42,7 @@ function displayResults(responseJson) {
   //display the results section  
   $('.js-results').removeClass('hidden');
   
-  const findsimilar = $(".find-similar").val();
+  
   getRecommendations(findsimilar);
 };
 
@@ -78,9 +78,9 @@ function getRecommendations(id){
   const parameters = {
     id: id
   };
-
+  
   const url = recommendationURL + id + '/recommendations?safe_mode=1';
-
+  console.log(id);
   console.log(url);
 
   const options = {
@@ -102,8 +102,15 @@ function getRecommendations(id){
 
 }
 
+
 function displayPodcastRecommendations(id) {
-  $( ".find-similar" ).click(function() {
+ 
+    $( ".find-similar" ).click(function() {
+        
+        alert('Hello world');
+    console.log("id");
+
+    getRecommendations(id);
     for (let i = 0; i < id.recommendations.length; i++){
 
       $(this).closest('.contain').append(
@@ -121,6 +128,9 @@ function displayPodcastRecommendations(id) {
 
     }
   });
+}
+function findSimilarPodcasts(id) {
+    
 }
 
 function watchForm() {
