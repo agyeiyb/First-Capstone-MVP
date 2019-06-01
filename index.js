@@ -39,6 +39,10 @@ function displayResults(responseJson) {
 </div>
 `
     )
+    
+    $(".find-similar").click(function() { 
+      getRecommendations(responseJson.results[i].id);
+    }); 
   };
 
 
