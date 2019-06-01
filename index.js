@@ -4,7 +4,9 @@ const apiKey = '56d21064b7cc44009259fb9e42cb3962'
 
 const searchURL = 'https://listen-api.listennotes.com/api/v2/search';
 
-const recommendationURL =  'https://listen-api.listennotes.com/api/v2/podcasts/';
+const recommendationURL = 'https://listen-api.listennotes.com/api/v2/podcasts/';
+
+
 
 function formatQueryParams(params) {
   const queryItems = Object.keys(params)
@@ -14,36 +16,37 @@ function formatQueryParams(params) {
 
 
 function displayResults(responseJson) {
- 
+
   // if there are previous results, remove them
   $('.js-results').empty();
   // iterate through the articles array, stopping at the max number of results
-  for (let i = 0; i < responseJson.results.length; i++){
+  for (let i = 0; i < responseJson.results.length; i++) {
     // for each video object in the articles
     //array, add a list item to the results 
     //list with the article title, source, author,
     //description, and image
-    
+
     $('.js-results').append(
-        `
+      `
 <div class="contain">
     <h2 class="js-name clearfix">${responseJson.results[i].title_original}</h2>
     <div class="js-info">
     <img class ="thumbnail" src='${responseJson.results[i].thumbnail}'>
         <p class="readmore-contain">${responseJson.results[i].description_original}</p>
         <a class = "learn-more-button" href='${responseJson.results[i].listennotes_url}'>Learn More</a>
-        <button onclick="getRecommendations('${responseJson.results[i].id}')"class = "find-similar learn-more-button" value = ${responseJson.results[i].id}>Find Similar Podcasts</button>
-    </div>
+        <button onclick="getRecommendations('${responseJson.results[i].id}')" class = "find-similar learn-more-button" value = ${responseJson.results[i].id}>Find Similar Podcasts</button>
+        </div>
 </div>
 `
-    )};
-    
-   
+    )
+  };
+
+
   //display the results section  
   $('.js-results').removeClass('hidden');
-  
-  
- 
+
+
+  //getRecommendations(findsimilar);
 };
 
 function getPodcasts(query) {
@@ -58,7 +61,8 @@ function getPodcasts(query) {
 
   const options = {
     headers: new Headers({
-      "X-ListenAPI-Key": apiKey})
+      "X-ListenAPI-Key": apiKey
+    })
   };
 
   fetch(url, options)
@@ -74,18 +78,20 @@ function getPodcasts(query) {
     });
 }
 
-function getRecommendations(id){
+function getRecommendations(id) {
+  
   const parameters = {
     id: id
   };
-  
+
   const url = recommendationURL + id + '/recommendations?safe_mode=1';
   console.log(id);
   console.log(url);
 
   const options = {
     headers: new Headers({
-      "X-ListenAPI-Key": apiKey})
+      "X-ListenAPI-Key": apiKey
+    })
   };
 
   fetch(url, options)
@@ -100,47 +106,49 @@ function getRecommendations(id){
       $('#js-warn').text(`Something went wrong`);
     });
 
+
 }
 
 
-function displayPodcastRecommendations(id) {
- 
-    $( ".find-similar" ).click(function() {
-        
-        alert('Hello world');
-    console.log("id");
+function displayPodcastRecommendations(responseJson) {
 
-    getRecommendations(id);
-    for (let i = 0; i < id.recommendations.length; i++){
-
-      $(this).closest('.contain').append(
-        `
+  $(".find-similar").click(function () {
+    $('.similar').empty();
+    //alert('Hello world');
+    console.log("id " + responseJson.id);
+    let id = responseJson.recommendations.id;
+    const url = recommendationURL + id + '/recommendations?safe_mode=1';
+    $(this).closest('.contain').append(
+      `
 <div class="similar">
-    <h2 class="js-name clearfix">${id.recommendations[i].title}</h2>
-    <div class="js-info">
-    <img class ="thumbnail" src='${id.recommendations[i].thumbnail}'>
-        <p class="readmore-contain">${id.recommendations[i].description}</p>
-        <a class = "learn-more-button" href='${id.recommendations[i].listennotes_url}'>Learn More</a>
-    </div>
+  <h2 class="js-name clearfix">${responseJson.recommendations[0].title}</h2>
+  <div class="js-info">
+  <img class ="thumbnail" src='${responseJson.recommendations[0].thumbnail}'>
+      <p class="readmore-contain">${responseJson.recommendations[0].description}</p>
+      <a class = "learn-more-button" href='${responseJson.recommendations[0].listennotes_url}'>Learn More</a>
+  </div>
 </div>
 `
     )
+    
 
-    }
+
   });
+  
 }
 function findSimilarPodcasts(id) {
-    
+
 }
 
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
     const searchTerm = $('.js-search-term').val();
-    
+
     getPodcasts(searchTerm);
-    
+
   });
 }
 
 $(watchForm);
+
