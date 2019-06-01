@@ -116,7 +116,7 @@ function getRecommendations(id) {
 
 function displayPodcastRecommendations(responseJson) {
 
-  $(".find-similar").click(function () {
+ 
     $('.similar').empty();
     //alert('Hello world');
     console.log("id " + responseJson.id);
@@ -137,7 +137,7 @@ function displayPodcastRecommendations(responseJson) {
     
 
 
-  });
+ 
   
 }
 function findSimilarPodcasts(id) {
