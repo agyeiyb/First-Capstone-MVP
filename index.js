@@ -35,14 +35,13 @@ function displayResults(responseJson) {
         <p class="readmore-contain">${responseJson.results[i].description_original}</p>
         <a class = "learn-more-button" href='${responseJson.results[i].listennotes_url}'>Learn More</a>
         <button class = "find-similar learn-more-button" value = ${responseJson.results[i].id}>Find Similar Podcasts</button>
+        <div id = ${responseJson.results[i].id}> </div>
         </div>
 </div>
 `
     )
-    
-    $(".find-similar").click(function() { 
-      getRecommendations(responseJson.results[i].id);
-    }); 
+   
+   
   };
 
 
@@ -52,6 +51,8 @@ function displayResults(responseJson) {
 
   //getRecommendations(findsimilar);
 };
+
+
 
 function getPodcasts(query) {
   const params = {
@@ -105,7 +106,7 @@ function getRecommendations(id) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => displayPodcastRecommendations(responseJson))
+    .then(responseJson => displayPodcastRecommendations(responseJson,id))
     .catch(err => {
       $('#js-warn').text(`Something went wrong`);
     });
@@ -114,30 +115,33 @@ function getRecommendations(id) {
 }
 
 
-function displayPodcastRecommendations(responseJson) {
+function displayPodcastRecommendations(responseJson,id) {
 
- 
+  //$(".find-similar").click(function () {
     $('.similar').empty();
     //alert('Hello world');
-    console.log("id " + responseJson.id);
-    let id = responseJson.recommendations.id;
+    console.log("id " + id);
+    let newid = "#"+id;
+    console.log(newid);
+    //let id = responseJson.recommendations.id;
     const url = recommendationURL + id + '/recommendations?safe_mode=1';
-    $(this).closest('.contain').append(
+    for (let i = 0; i < responseJson.recommendations.length; i++) {
+    $(newid).append(
       `
 <div class="similar">
-  <h2 class="js-name clearfix">${responseJson.recommendations[0].title}</h2>
+  <h2 class="js-name clearfix">${responseJson.recommendations[i].title}</h2>
   <div class="js-info">
-  <img class ="thumbnail" src='${responseJson.recommendations[0].thumbnail}'>
-      <p class="readmore-contain">${responseJson.recommendations[0].description}</p>
-      <a class = "learn-more-button" href='${responseJson.recommendations[0].listennotes_url}'>Learn More</a>
+  <img class ="thumbnail" src='${responseJson.recommendations[i].thumbnail}'>
+      <p class="readmore-contain">${responseJson.recommendations[i].description}</p>
+      <a class = "learn-more-button" href='${responseJson.recommendations[i].listennotes_url}'>Learn More</a>
   </div>
 </div>
 `
     )
     
+    }
 
-
- 
+  //});
   
 }
 function findSimilarPodcasts(id) {
@@ -156,3 +160,7 @@ function watchForm() {
 
 $(watchForm);
 
+$(".js-results").on('click', '.find-similar', function(e) {
+  console.log('target value', e.target.value )
+    getRecommendations(e.target.value);
+  }); 
