@@ -3,7 +3,7 @@ div.contain {
   border-width: 5px;
   border-radius:4px;
   margin:10px;
-   width: 33%;
+   width: 100%;
 }
 
 .js-results{
@@ -31,4 +31,47 @@ div.contain {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  
+}
+
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+
+  js-results{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-left: 0px;
+   }
+
+
+   div.contain {
+    border-style: double;
+    border-width: 5px;
+    border-radius:4px;
+    margin:10px;
+     width: 33%;
+  }
+  
+
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+
+
+  .learn-more-button {
+    border: 1px;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-style:solid;
+  }
 }
